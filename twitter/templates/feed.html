@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+        <title>Like a Twitter</title>
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Rubik", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+        body {
+            background-color: #000;
+        }
+
+        .container {
+            color: #fff;
+            margin: 0 auto;
+            padding: 0 16px;
+            max-width: 600px;
+            width: 100%;
+
+            .whatsup {
+                max-height: 150px;
+                height: 100%;
+                width: 100%;
+                margin-top: 30px;
+                border-top: 1px solid #71767B;
+                border-bottom: 1px solid #71767B;
+
+                textarea{
+                    background-color: transparent;
+                    border: none;
+                    resize: none;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                div{
+                    display: flex;
+                    justify-content: end;
+                    margin-bottom: 8px;
+
+                    input {
+                        max-width: 70px;
+                        background-color: #1d9bf0;
+                        padding-left: 16px;
+                        padding-right: 16px;
+                        border-radius: 9999px;
+                        color: rgb(255,255,255);
+                        min-height: 36px;
+                        border: none;
+                    }
+                }
+            }
+
+            .post {
+                display: flex;
+                border-bottom: 1px solid #71767B;
+                padding: 12px 16px;
+
+                .avatar{
+                    max-width: 40px;
+                    width: 100%;
+                    margin-right: 8px;
+                    img {
+                        max-width: 40px;
+                        max-height: 40px;
+                        border-radius: 50%;
+                    }
+                }
+
+                .post-elements{
+                    .author {
+                        font-size: 15px;
+                    }
+
+                    .text-content {
+                        font-size: 17px;
+                        margin: 15px 0;
+                    }
+
+                    .photo {
+                        img{
+                            width: 100%;
+                        }
+                    }
+
+                    .created_at{
+                        margin: 5px 0;
+                    }
+
+                    .likes{
+                        display: flex;
+                        border-top: 1px solid #71767B;
+                        padding-top: 10px;
+                        font-size: 13px;
+
+                        img{
+                            max-width: 20px;
+                            max-height: 20px;
+                            margin-right: 4px;
+                        }
+
+                        p{
+                            margin-right: 90px;
+                        }
+                    }
+                }
+            }
+        }
+    </style>
+    <body>
+        {% block content %}
+        <div class="container">
+        <div class="whatsup">
+            <textarea name="whatsup" id="whatsup" placeholder="What is happening?"></textarea>
+            <div>
+                <input type="submit" value="Post">
+            </div>
+        </div>
+        <div class="posts">
+            {% for post in posts %}
+                <article class="post">
+                    <div class="avatar">
+                        {% if post.author.avatar %}
+                            <img src="{{ post.author.avatar.url }}" alt="User Avatar" />
+                        {% else %}
+                            <img src="default-avatar.png" alt="Default Avatar" />
+                        {% endif %}
+                    </div>
+                    <div class="post-elements">
+                        <div class="author">
+                            <p>{{ post.author }}</p>
+                        </div>
+                        <div class="text-content">
+                            <p>{{ post.content }}</p>
+                        </div>
+                        <div class="photo">
+                            {% if post.photo %}
+                                <img src="{{ post.photo.url }}" alt="Post image" />
+                            {% endif %}
+                        </div>
+                        <p class="created_at">Data de criação: {{ post.created_at }}</p>
+                        <div class="likes">
+                            <img src="../../media/mensagem.png" alt="Comments">
+                            <p>10</p>
+                            <img src="../../media/like.png" alt="Liks">
+                            <p>150</p>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+        {% endblock %}
+    </body>
+</html>
