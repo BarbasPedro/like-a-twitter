@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 
@@ -9,10 +10,14 @@ class User(AbstractUser):
     user_permissions = models.ManyToManyField(Permission, related_name='twitter_users_permissions')
 
 class Post(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
     photo = models.ImageField(upload_to='post-images/', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
+
+    def total_likes(self):
+        return self.likes.count()
 
 class Follow(models.Model):
     follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')

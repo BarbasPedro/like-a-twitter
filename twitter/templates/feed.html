@@ -1,13 +1,12 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-        <title>Like a Twitter</title>
-    </head>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <title>Like a Twitter</title>
     <style>
         * {
             margin: 0;
@@ -17,117 +16,200 @@
             font-optical-sizing: auto;
             font-weight: 400;
             font-style: normal;
+
+            a {
+                color: rgb(255,255,255);
+                border-radius: 9999px;
+                padding: 4px 16px;
+                text-decoration: none;
+                margin-left: 12px;
+            }
         }
         body {
             background-color: #000;
         }
 
         .container {
+            display: block;
             color: #fff;
             margin: 0 auto;
             padding: 0 16px;
             max-width: 600px;
             width: 100%;
+        }
 
-            .whatsup {
-                max-height: 150px;
-                height: 100%;
-                width: 100%;
-                margin-top: 30px;
-                border-top: 1px solid #71767B;
-                border-bottom: 1px solid #71767B;
+        .header {
+            margin-top: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-                textarea{
-                    background-color: transparent;
+            #logoLT{
+                img{
+                    max-width: 32px;
                     border: none;
-                    resize: none;
-                    width: 100%;
-                    height: 100%;
                 }
+            }
 
-                div{
-                    display: flex;
-                    justify-content: end;
-                    margin-bottom: 8px;
+            nav {
+                a {
+                    background-color: #c58714;
 
-                    input {
+                    &:hover {
+                        transition: 0.3s;
+                        background-color: #533908;
+                    }
+                }
+            }
+        }
+
+        .whatsup {
+            background-color: #000;
+            width: 100%;
+            margin-top: 8px;
+            border-top: 1px solid #71767B;
+            border-bottom: 1px solid #71767B;
+            margin-bottom: 8px;
+            padding-top: 8px;
+
+            form {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+
+                > div{
+                    display: block;
+
+                    textarea {
+                        background-color: transparent;
+                        width: 100%;
+                        color: #fff;
+                        border: none;
+                        resize: none;
+                        outline: none;
+                        -ms-overflow-style: none;
+                        scrollbar-width: none;
+                    }
+
+                    &::-webkit-scrollbar {
+                        display: none;  /* Chrome, Safari, Opera */
+                    }
+
+                    input[type="submit"] {
                         max-width: 70px;
-                        background-color: #1d9bf0;
+                        background-color: #c58714;
                         padding-left: 16px;
                         padding-right: 16px;
                         border-radius: 9999px;
                         color: rgb(255,255,255);
                         min-height: 36px;
                         border: none;
+
+                        &:hover {
+                            background-color: #533908;
+                        }
                     }
                 }
-            }
 
-            .post {
-                display: flex;
-                border-bottom: 1px solid #71767B;
-                padding: 12px 16px;
-
-                .avatar{
-                    max-width: 40px;
+                .input-div{
+                    background-color: yellowgreen;
+                    height: 100%;
                     width: 100%;
-                    margin-right: 8px;
-                    img {
-                        max-width: 40px;
-                        max-height: 40px;
-                        border-radius: 50%;
-                    }
-                }
-
-                .post-elements{
-                    .author {
-                        font-size: 15px;
-                    }
-
-                    .text-content {
-                        font-size: 17px;
-                        margin: 15px 0;
-                    }
-
-                    .photo {
-                        img{
-                            width: 100%;
-                        }
-                    }
-
-                    .created_at{
-                        margin: 5px 0;
-                    }
-
-                    .likes{
-                        display: flex;
-                        border-top: 1px solid #71767B;
-                        padding-top: 10px;
-                        font-size: 13px;
-
-                        img{
-                            max-width: 20px;
-                            max-height: 20px;
-                            margin-right: 4px;
-                        }
-
-                        p{
-                            margin-right: 90px;
-                        }
-                    }
                 }
             }
         }
+        .posts{
+            margin-top: 100px;
+        }
+
+        .post {
+            display: flex;
+            border-bottom: 1px solid #71767B;
+            padding: 12px 16px;
+        }
+        .avatar {
+            max-width: 40px;
+            width: 100%;
+            margin-right: 8px;
+        }
+        .avatar img {
+            max-width: 40px;
+            max-height: 40px;
+            border-radius: 50%;
+        }
+        .post-elements {
+            width: 100%;
+        }
+        .author {
+            font-size: 15px;
+        }
+        .text-content {
+            font-size: 17px;
+            margin: 15px 0;
+        }
+        .photo img {
+            width: 100%;
+        }
+        .created_at {
+            width: 100%;
+            margin: 5px 0;
+            font-size: 10px;
+            color: #71767B;
+        }
+        .likes {
+            display: flex;
+            border-top: 1px solid #71767B;
+            padding-top: 10px;
+            font-size: 13px;
+        }
+        .likes img {
+            max-width: 20px;
+            max-height: 20px;
+            margin-right: 4px;
+        }
+        .likes p {
+            margin-right: 90px;
+        }
     </style>
-    <body>
-        {% block content %}
-        <div class="container">
-        <div class="whatsup">
-            <textarea name="whatsup" id="whatsup" placeholder="What is happening?"></textarea>
-            <div>
-                <input type="submit" value="Post">
-            </div>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{% url 'feed' %}" id="logoLT">
+                <img src="../../media/icones/LT.png" alt="Like a Twitter Icone">
+            </a>
+            <nav>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="button" id="logout">Sair</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="button" id="login">Login</a>
+                    <a href="{% url 'register' %}" class="button" id="signin">Sign in</a>
+                {% endif %}
+            </nav>
         </div>
+
+        <div class="whatsup">
+            {% if user.is_authenticated %}
+            <form method="post" enctype="multipart/form-data" class="newpost">
+                {% csrf_token %}
+                <div>
+                    {{ form.content }}
+                    {{ form.photo }}
+                <div>
+                </div class="input-div">
+                    <input type="submit" value="Post">
+                </div>
+            </form>
+            {% else %}
+            <div class="postlink">
+                <a href="{% url 'register' %}">
+                    <p>Sign in</p>
+                    <img src="../../media/icones/icone-seta.png" alt="">
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
         <div class="posts">
             {% for post in posts %}
                 <article class="post">
@@ -135,7 +217,7 @@
                         {% if post.author.avatar %}
                             <img src="{{ post.author.avatar.url }}" alt="User Avatar" />
                         {% else %}
-                            <img src="default-avatar.png" alt="Default Avatar" />
+                            <img src="../../media/icones/default-avatar.png" alt="Default Avatar" />
                         {% endif %}
                     </div>
                     <div class="post-elements">
@@ -150,17 +232,59 @@
                                 <img src="{{ post.photo.url }}" alt="Post image" />
                             {% endif %}
                         </div>
-                        <p class="created_at">Data de criação: {{ post.created_at }}</p>
+                        <p class="created_at">{{ post.created_at }}</p>
                         <div class="likes">
-                            <img src="../../media/mensagem.png" alt="Comments">
+                            <img src="../../media/icones/mensagem.png" alt="Comments">
                             <p>10</p>
-                            <img src="../../media/like.png" alt="Liks">
-                            <p>150</p>
+                            <img src="../../media/icones/{{ post.liked|yesno:'liked.png,like.png' }}" alt="Likes" class="like-btn" data-post-id="{{ post.id }}">
+                            <p class="like-count">{{ post.total_likes }}</p>
                         </div>
                     </div>
                 </article>
             {% endfor %}
         </div>
-        {% endblock %}
-    </body>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var textarea = document.querySelector('textarea[name="content"]');
+
+            if (textarea) {
+                textarea.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = (this.scrollHeight) + 'px';
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.like-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var postId = this.getAttribute('data-post-id');
+                    var likeCount = this.nextElementSibling;
+                    var likeBtn = this;
+
+                    fetch(`{% url 'like_post' 0 %}`.replace(0, postId), {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({})
+                    }).then(response => response.json()).then(data => {
+                        if (data.liked !== undefined) {
+                            likeCount.textContent = data.total_likes;
+                            if (data.liked) {
+                                likeBtn.src = "../../media/icones/liked.png";
+                            } else {
+                                likeBtn.src = "../../media/icones/like.png";
+                            }
+                        } else {
+                            alert(data.error);
+                        }
+                });
+            });
+        });
+    });
+    </script>
+</body>
 </html>

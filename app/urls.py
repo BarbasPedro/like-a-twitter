@@ -20,10 +20,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from twitter.views import feed_view
+from accounts.views import login_view, logout_view, register_view
+from twitter.views import FeedView, NewPostCreateView, like_post
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("feed/", feed_view),
-    path("new_post/", new_post_view),
+    path("login/", login_view, name="login"),
+    path("logout/", logout_view, name="logout"),
+    path("register/", register_view, name="register"),
+    path("feed/", FeedView.as_view(), name="feed"),
+    path("new_post/", NewPostCreateView.as_view(), name="new_post"),
+    path('feed/like/<int:post_id>/', like_post, name='like_post'),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
