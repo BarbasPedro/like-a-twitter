@@ -8,7 +8,7 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     groups = models.ManyToManyField(Group, related_name='twitter_users')
     user_permissions = models.ManyToManyField(Permission, related_name='twitter_users_permissions')
-
+    following = models.ManyToManyField('self', symmetrical=False, related_name='followers', blank=True)
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     content = models.TextField()
@@ -18,7 +18,3 @@ class Post(models.Model):
 
     def total_likes(self):
         return self.likes.count()
-
-class Follow(models.Model):
-    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name='following')
-    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name='followers')

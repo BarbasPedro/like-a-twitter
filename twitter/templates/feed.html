@@ -13,9 +13,14 @@
             padding: 0;
             box-sizing: border-box;
             font-family: "Rubik", sans-serif;
+        }
+
+        body {
             font-optical-sizing: auto;
             font-weight: 400;
             font-style: normal;
+            color: #fff;
+            background-color: #000;
 
             a {
                 color: rgb(255,255,255);
@@ -24,14 +29,14 @@
                 text-decoration: none;
                 margin-left: 12px;
             }
-        }
-        body {
-            background-color: #000;
+
+            li {
+                list-style: none;
+            }
         }
 
         .container {
             display: block;
-            color: #fff;
             margin: 0 auto;
             padding: 0 16px;
             max-width: 600px;
@@ -112,179 +117,344 @@
                 }
 
                 .input-div{
-                    background-color: yellowgreen;
+                    display: flex;
+                    justify-content: flex-end;
                     height: 100%;
                     width: 100%;
                 }
             }
         }
+
         .posts{
             margin-top: 100px;
-        }
 
-        .post {
+            .post {
             display: flex;
             border-bottom: 1px solid #71767B;
             padding: 12px 16px;
+
+                .avatar {
+                    max-width: 40px;
+                    width: 100%;
+                    margin-right: 8px;
+
+                    img {
+                            max-width: 40px;
+                            max-height: 40px;
+                            border-radius: 50%;
+                        }
+                }
+
+                .post-elements {
+                    width: 100%;
+
+                    .author {
+                        font-size: 15px;
+
+                        button {
+                            background-color: #c58714;
+                            padding-left: 16px;
+                            padding-right: 16px;
+                            border-radius: 9999px;
+                            color: rgb(255,255,255);
+                            border: none;
+
+                            &:hover {
+                                background-color: #533908;
+                            }
+                        }
+                    }
+
+                    .text-content {
+                        font-size: 17px;
+                        margin: 15px 0;
+                    }
+
+                    .photo img {
+                        width: 100%;
+                    }
+
+                    .created_at {
+                        width: 100%;
+                        margin: 5px 0;
+                        font-size: 10px;
+                        color: #71767B;
+                    }
+
+                    .likes {
+                        display: flex;
+                        border-top: 1px solid #71767B;
+                        padding-top: 10px;
+                        font-size: 13px;
+
+                        img {
+                                max-width: 20px;
+                                max-height: 20px;
+                                margin-right: 4px;
+                        }
+
+                        p {
+                                margin-right: 90px;
+                        }
+                    }
+
+                }
+
+            }
         }
-        .avatar {
-            max-width: 40px;
-            width: 100%;
-            margin-right: 8px;
-        }
-        .avatar img {
-            max-width: 40px;
-            max-height: 40px;
-            border-radius: 50%;
-        }
-        .post-elements {
-            width: 100%;
-        }
-        .author {
-            font-size: 15px;
-        }
-        .text-content {
-            font-size: 17px;
-            margin: 15px 0;
-        }
-        .photo img {
-            width: 100%;
-        }
-        .created_at {
-            width: 100%;
-            margin: 5px 0;
-            font-size: 10px;
-            color: #71767B;
-        }
-        .likes {
-            display: flex;
-            border-top: 1px solid #71767B;
-            padding-top: 10px;
-            font-size: 13px;
-        }
-        .likes img {
-            max-width: 20px;
-            max-height: 20px;
-            margin-right: 4px;
-        }
-        .likes p {
-            margin-right: 90px;
-        }
+
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <a href="{% url 'feed' %}" id="logoLT">
-                <img src="../../media/icones/LT.png" alt="Like a Twitter Icone">
-            </a>
-            <nav>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'logout' %}" class="button" id="logout">Sair</a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="button" id="login">Login</a>
-                    <a href="{% url 'register' %}" class="button" id="signin">Sign in</a>
-                {% endif %}
-            </nav>
-        </div>
-
-        <div class="whatsup">
-            {% if user.is_authenticated %}
-            <form method="post" enctype="multipart/form-data" class="newpost">
-                {% csrf_token %}
-                <div>
-                    {{ form.content }}
-                    {{ form.photo }}
-                <div>
-                </div class="input-div">
-                    <input type="submit" value="Post">
-                </div>
-            </form>
-            {% else %}
-            <div class="postlink">
-                <a href="{% url 'register' %}">
-                    <p>Sign in</p>
-                    <img src="../../media/icones/icone-seta.png" alt="">
+    <div style="display: grid; grid-template-columns: auto auto auto;">
+        <div></div>
+        <div class="container">
+            <div class="header">
+                <a href="{% url 'feed' %}" id="logoLT">
+                    <img src="../../media/icones/LT.png" alt="Like a Twitter Icone">
                 </a>
+                <nav>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'logout' %}" class="button" id="logout">Sair</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="button" id="login">Login</a>
+                        <a href="{% url 'register' %}" class="button" id="signin">Sign in</a>
+                    {% endif %}
+                </nav>
             </div>
-            {% endif %}
-        </div>
 
-        <div class="posts">
-            {% for post in posts %}
-                <article class="post">
-                    <div class="avatar">
-                        {% if post.author.avatar %}
-                            <img src="{{ post.author.avatar.url }}" alt="User Avatar" />
-                        {% else %}
-                            <img src="../../media/icones/default-avatar.png" alt="Default Avatar" />
-                        {% endif %}
+            <div class="whatsup">
+                {% if user.is_authenticated %}
+                <form method="post" enctype="multipart/form-data" class="newpost">
+                    {% csrf_token %}
+                    <div>
+                        {{ form.content }}
+                        {{ form.photo }}
                     </div>
-                    <div class="post-elements">
-                        <div class="author">
-                            <p>{{ post.author }}</p>
-                        </div>
-                        <div class="text-content">
-                            <p>{{ post.content }}</p>
-                        </div>
-                        <div class="photo">
-                            {% if post.photo %}
-                                <img src="{{ post.photo.url }}" alt="Post image" />
+                    <div class="input-div">
+                        <input type="submit" value="Post">
+                    </div>
+                </form>
+                {% else %}
+                <div class="postlink">
+                    <a href="{% url 'register' %}">
+                        <p>Sign in</p>
+                        <img src="../../media/icones/icone-seta.png" alt="">
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="posts">
+                {% for post in posts %}
+                    <article class="post">
+                        <div class="avatar">
+                            {% if post.author.avatar %}
+                                <img src="{{ post.author.avatar.url }}" alt="User Avatar" />
+                            {% else %}
+                                <img src="../../media/icones/default-avatar.png" alt="Default Avatar" />
                             {% endif %}
                         </div>
-                        <p class="created_at">{{ post.created_at }}</p>
-                        <div class="likes">
-                            <img src="../../media/icones/mensagem.png" alt="Comments">
-                            <p>10</p>
-                            <img src="../../media/icones/{{ post.liked|yesno:'liked.png,like.png' }}" alt="Likes" class="like-btn" data-post-id="{{ post.id }}">
-                            <p class="like-count">{{ post.total_likes }}</p>
+                        <div class="post-elements">
+                            <div class="author">
+                                <p>@{{ post.author }}</p>
+                                {% if user.is_authenticated %}
+                                    {% if user != post.author %}
+                                    <button class="follow-btn" data-user-id="{{ post.author.id }}" data-username="{{ post.author.username }}">
+                                        {% if following_status.post.id %}
+                                            Unfollow
+                                        {% else %}
+                                            Follow
+                                        {% endif %}
+                                    </button>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="text-content">
+                                <p>{{ post.content }}</p>
+                            </div>
+                            <div class="photo">
+                                {% if post.photo %}
+                                    <img src="{{ post.photo.url }}" alt="Post image" />
+                                {% endif %}
+                            </div>
+                            <p class="created_at">{{ post.created_at }}</p>
+                            <div class="likes">
+                                <img src="../../media/icones/mensagem.png" alt="Comments">
+                                <p>10</p>
+                                <img src="../../media/icones/{{ post.liked|yesno:'liked.png,like.png' }}" alt="Likes" class="like-btn" data-post-id="{{ post.id }}">
+                                <p class="like-count">{{ post.total_likes }}</p>
+                            </div>
                         </div>
-                    </div>
-                </article>
-            {% endfor %}
+                    </article>
+                {% endfor %}
+            </div>
         </div>
+        {% if user.is_authenticated %}
+        <aside>
+            <div id="following">
+                <h3 id="following-count">Following {{ following_count }}</h3>
+                <ul id="following-list">
+                    {% for following_user in following_list %}
+                        <li>{{ following_user.username }}</li>
+                    {% empty %}
+                        <li>Você não está seguindo ninguém.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="followers">
+                <h3 id="followers-count">Followers ({{ user.followers.count }})</h3>
+                <ul id="following-list">
+                    {% for follower in user.followers.all %}
+                        <li>{{ follower.username }}</li>
+                    {% empty %}
+                        <li>Você não tem seguidores ainda.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+        {% endif %}
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var textarea = document.querySelector('textarea[name="content"]');
+    document.addEventListener('DOMContentLoaded', function() {
+    // Código para seguir/desseguir usuários
+    document.querySelectorAll('.follow-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const userId = this.getAttribute('data-user-id');
+            const buttonText = this;
 
-            if (textarea) {
-                textarea.addEventListener('input', function() {
-                    this.style.height = 'auto';
-                    this.style.height = (this.scrollHeight) + 'px';
-                });
-            }
-        });
+            fetch(`/follow/${userId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.followed !== undefined) {
+                    buttonText.textContent = data.followed ? 'Unfollow' : 'Follow';
 
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.like-btn').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    var postId = this.getAttribute('data-post-id');
-                    var likeCount = this.nextElementSibling;
-                    var likeBtn = this;
+                    // Atualize o número total de seguidores e a lista de seguidores
+                    document.querySelector('#following-count').textContent = `Following (${data.total_following})`;
+                    document.querySelector('#followers-count').textContent = `Followers (${data.total_followers})`;
 
-                    fetch(`{% url 'like_post' 0 %}`.replace(0, postId), {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRFToken': '{{ csrf_token }}',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({})
-                    }).then(response => response.json()).then(data => {
-                        if (data.liked !== undefined) {
-                            likeCount.textContent = data.total_likes;
-                            if (data.liked) {
-                                likeBtn.src = "../../media/icones/liked.png";
-                            } else {
-                                likeBtn.src = "../../media/icones/like.png";
-                            }
-                        } else {
-                            alert(data.error);
-                        }
-                });
+                    const followingList = document.querySelector('#following-list');
+                    followingList.innerHTML = '';
+                    data.following_list.forEach(user => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = user.username;
+                        followingList.appendChild(listItem);
+                    });
+
+                    const followersList = document.querySelector('#followers-list');
+                    followersList.innerHTML = '';
+                    data.followers_list.forEach(user => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = user.username;
+                        followersList.appendChild(listItem);
+                    });
+                }
             });
         });
     });
+
+    // Função para obter o valor do CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Código para atualizar a altura do textarea
+    var textarea = document.querySelector('textarea[name="content"]');
+    if (textarea) {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    }
+
+    // Código para like/unlike posts
+    document.querySelectorAll('.like-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var postId = this.getAttribute('data-post-id');
+            var likeCount = this.nextElementSibling;
+            var likeBtn = this;
+
+            fetch(`{% url 'like_post' 0 %}`.replace(0, postId), {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            }).then(response => response.json()).then(data => {
+                if (data.liked !== undefined) {
+                    likeCount.textContent = data.total_likes;
+                    likeBtn.src = data.liked ? "../../media/icones/liked.png" : "../../media/icones/like.png";
+                } else {
+                    alert(data.error);
+                }
+            });
+        });
+    });
+
+    // Código para follow/unfollow users
+    document.querySelectorAll('.follow-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const userId = this.getAttribute('data-user-id');
+            const buttonText = this;
+
+            fetch(`/follow/${userId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.followed !== undefined) {
+                    buttonText.textContent = data.followed ? 'Unfollow' : 'Follow';
+
+                    // Atualize o número total de seguidores
+                    document.querySelector('#following-count').textContent = `Following (${data.total_following})`;
+
+                    // Atualize a lista de seguidores
+                    const followingList = document.querySelector('#following-list');
+                    followingList.innerHTML = '';
+                    data.following_list.forEach(user => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = user.username;
+                        followingList.appendChild(listItem);
+                    });
+
+                    // Verifique se o usuário clicado deve ser removido ou adicionado
+                    const clickedUserListItem = Array.from(followingList.children).find(li => li.textContent === buttonText.dataset.username);
+                    if (data.followed && !clickedUserListItem) {
+                        const newListItem = document.createElement('li');
+                        newListItem.textContent = buttonText.dataset.username;
+                        followingList.appendChild(newListItem);
+                    } else if (!data.followed && clickedUserListItem) {
+                        clickedUserListItem.remove();
+                    }
+                }
+            });
+        });
+    });
+    });
+
     </script>
 </body>
 </html>
